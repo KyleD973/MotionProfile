@@ -11,8 +11,6 @@
 public abstract class Profile {
     
     public static Profile getProfile(double max_velocity, double acceleration, double distance){
-        //trapezoidal
-        System.out.println((Math.pow(max_velocity, 2.0) / acceleration));
         if((Math.pow(max_velocity, 2.0) / acceleration) < distance){
             System.out.println("trapezoidal");
             return new TrapProfile(max_velocity, acceleration, distance);
@@ -22,7 +20,10 @@ public abstract class Profile {
             return new TriProfile(max_velocity, acceleration, distance);
 	}
     }
-    
+   
     public abstract double getFinalTime();
     public abstract double getVelocityAtTime(double time);
+    public abstract double getDist();
+    public abstract double getMaxVel();
+    public abstract double getAccel();
 }

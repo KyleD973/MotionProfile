@@ -16,21 +16,19 @@ public class TriProfile extends Profile {
         acceleration = accel;
         distance = dist;
         t0 = 0.0;
-        t_half = Math.sqrt(0.5 * distance / acceleration);
+        t_half = Math.abs(Math.sqrt(0.5 * distance / acceleration));
         t1 = 2.0 * t_half;
     }
     
     public double getVelocityAtTime(double time){
         double v_exp;
         if(time == t_half)
-                v_exp = acceleration * t_half;
+            v_exp = acceleration * t_half;
         else if(time < t_half){
-                v_exp = acceleration * time;
-                System.out.println("At left triangle");
+            v_exp = acceleration * time;
         }
         else if(time > t_half){
-                v_exp  = acceleration * (t1 - time);
-                System.out.println("At left triangle");
+            v_exp  = acceleration * (t1 - time);
         }
         else
             v_exp = 0;
@@ -41,5 +39,15 @@ public class TriProfile extends Profile {
         return t1;
     }
     
+    public double getDist(){
+        return distance;
+    }
     
+    public double getMaxVel(){
+        return max_velocity;
+    }
+    
+    public double getAccel(){
+        return acceleration;
+    }
 }
