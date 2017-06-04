@@ -1,3 +1,6 @@
+
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,7 +29,7 @@ public class TrapProfile extends Profile {
     }
 
     public double getVelocityAtTime(double time){
-        double v_exp;
+        double v_exp = 0;
         if(time >= t1 && time <= t2){
             v_exp = max_velocity;
         }
@@ -36,10 +39,34 @@ public class TrapProfile extends Profile {
         else if(time > t2){
             v_exp  = acceleration * (t3 - time);
         }
-        else{
-            v_exp = 0;
-        }
         return v_exp;
+    }
+    
+    public double getDistAtTime(double time){
+        double dist = 0;
+        if(time >= t1 && time <= t2){
+            dist = (0.5 * max_velocity * time) + (max_velocity * (time - t1));
+        }
+        else if(time <= t1){
+            dist = (0.5 * getVelocityAtTime(time) * time);
+        }
+        else if(time > t2 && time <= t3){
+            dist  = (0.5 * max_velocity * time) + (max_velocity * (time - t1))
+                    + (0.5 * (time - t2) * getVelocityAtTime(time - t2));
+        }
+        else{
+            dist = distance;
+        }
+        return dist;
+    }
+    
+    //per 100 msec
+    public ArrayList<Double> getDistances(){
+        ArrayList<Double> distArr = new ArrayList<>();
+        for(double i = 0.0; i <= getFinalTime(); i += 0.1){
+            distArr.add(new Double(getDistAtTime(i)));
+        }
+        return distArr;
     }
     
     public double getDist(){

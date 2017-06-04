@@ -8,6 +8,8 @@
  *
  * @author kyledematias
  */
+import java.util.ArrayList;
+
 public class TriProfile extends Profile {
     private double max_velocity, acceleration, distance, t0, t_half, t1;
     
@@ -33,6 +35,29 @@ public class TriProfile extends Profile {
         else
             v_exp = 0;
         return v_exp;
+    }
+    
+    public double getDistAtTime(double time){
+        double dist = 0;
+        if(time == t_half)
+            dist = acceleration * Math.pow(t_half, 2.0);
+        else if(time < t_half){
+            dist = acceleration * Math.pow(time, 2.0);
+        }
+        else if(time > t_half){
+            dist = (acceleration * Math.pow(t_half, 2.0)) + ((acceleration * Math.pow(t_half, 2.0)) 
+                    + (acceleration * Math.pow(t1 - time, 2.0)));
+        }
+        return dist;
+    }
+    
+    //per 1 msec
+    public ArrayList<Double> getDistances(){
+        ArrayList<Double> distArr = new ArrayList<>();
+        for(double i = 0.0; i <= getFinalTime(); i += 0.001){
+            distArr.add(new Double(getDistAtTime(i)));
+        }
+        return distArr;
     }
     
     public double getFinalTime(){

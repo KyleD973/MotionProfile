@@ -8,9 +8,11 @@
  *
  * @author kyledematias
  */
+import java.util.ArrayList;
+        
 public abstract class Profile {
     
-    public static Profile getProfile(double max_velocity, double acceleration, double distance){
+    public static Profile getVelProfile(double max_velocity, double acceleration, double distance){
         if((Math.pow(max_velocity, 2.0) / acceleration) < distance){
             System.out.println("trapezoidal");
             return new TrapProfile(max_velocity, acceleration, distance);
@@ -23,6 +25,8 @@ public abstract class Profile {
    
     public abstract double getFinalTime();
     public abstract double getVelocityAtTime(double time);
+    public abstract double getDistAtTime(double time);
+    public abstract ArrayList<Double> getDistances(); //each 1 ms increment
     public abstract double getDist();
     public abstract double getMaxVel();
     public abstract double getAccel();
