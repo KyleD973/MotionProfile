@@ -44,15 +44,15 @@ public class TrapProfile extends Profile {
     
     public double getDistAtTime(double time){
         double dist = 0;
-        if(time >= t1 && time <= t2){
-            dist = (0.5 * max_velocity * time) + (max_velocity * (time - t1));
+        if(time <= t1){
+            dist = (0.5 * getVelocityAtTime(time) * time); 
         }
-        else if(time <= t1){
-            dist = (0.5 * getVelocityAtTime(time) * time);
+        else if(time > t1 && time <= t2){
+            dist = (0.5 * max_velocity * t1) + (max_velocity * (time - t1));//2.0 + 20*2.3
         }
         else if(time > t2 && time <= t3){
-            dist  = (0.5 * max_velocity * time) + (max_velocity * (time - t1))
-                    + (0.5 * (time - t2) * getVelocityAtTime(time - t2));
+            dist  = (0.5 * max_velocity * t1) + (max_velocity * (t2 - t1))
+                    + ((Math.pow(getVelocityAtTime(time), 2.0) - Math.pow(max_velocity, 2.0)) / (2.0 * -acceleration));
         }
         else{
             dist = distance;
@@ -63,7 +63,7 @@ public class TrapProfile extends Profile {
     //per 100 msec
     public ArrayList<Double> getDistances(){
         ArrayList<Double> distArr = new ArrayList<>();
-        for(double i = 0.0; i <= getFinalTime(); i += 0.1){
+        for(double i = 0.0; i < getFinalTime() + 0.1; i += 0.1){
             distArr.add(new Double(getDistAtTime(i)));
         }
         return distArr;

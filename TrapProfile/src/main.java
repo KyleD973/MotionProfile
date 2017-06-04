@@ -48,12 +48,14 @@ public class main {
     
     public static void main (String[] args) throws java.lang.Exception
 	{
-            double v_max = 20.0;
+            double v_max = 90.0;
             double dist = 50.0;
             double accel = 100.0;
             Profile profile1 = Profile.getVelProfile(v_max, accel, dist);
             
+            System.out.println(profile1.getDistAtTime(profile1.getFinalTime()));//profile1.getFinalTime()));
             System.out.println(profile1.getDistances());
+            System.out.println(profile1.getVelocityAtTime(profile1.getFinalTime()));
             //System.out.println(checkExtremes(profile1) + " " + exceedsAccel(profile1) + exceedsAccel(profile1) + checkDist(profile1));
         }
 }

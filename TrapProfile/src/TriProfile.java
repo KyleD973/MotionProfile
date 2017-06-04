@@ -40,21 +40,25 @@ public class TriProfile extends Profile {
     public double getDistAtTime(double time){
         double dist = 0;
         if(time == t_half)
-            dist = acceleration * Math.pow(t_half, 2.0);
+            dist = (getVelocityAtTime(t_half) * t_half); 
         else if(time < t_half){
-            dist = acceleration * Math.pow(time, 2.0);
+            dist = (0.5 * getVelocityAtTime(time) * time); 
         }
-        else if(time > t_half){
-            dist = (acceleration * Math.pow(t_half, 2.0)) + ((acceleration * Math.pow(t_half, 2.0)) 
-                    + (acceleration * Math.pow(t1 - time, 2.0)));
+        else if(time > t_half && time <= t1){
+            dist = ( getVelocityAtTime(t_half) * t_half) +
+                    (getVelocityAtTime(t_half) + getVelocityAtTime(time) / 2.0) * (time - t_half);
+//(Math.pow((getVelocityAtTime(time)), 2.0) - Math.pow((getVelocityAtTime(t_half)), 2.0)) / (2.0 * -acceleration);
+        }
+        else{
+            return distance;
         }
         return dist;
     }
     
-    //per 1 msec
+    //per 100 msec
     public ArrayList<Double> getDistances(){
         ArrayList<Double> distArr = new ArrayList<>();
-        for(double i = 0.0; i <= getFinalTime(); i += 0.001){
+        for(double i = 0.0; i < getFinalTime() + 0.1; i += 0.1){
             distArr.add(new Double(getDistAtTime(i)));
         }
         return distArr;

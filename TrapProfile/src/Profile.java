@@ -26,7 +26,7 @@ public abstract class Profile {
     public abstract double getFinalTime();
     public abstract double getVelocityAtTime(double time);
     public abstract double getDistAtTime(double time);
-    public abstract ArrayList<Double> getDistances(); //each 1 ms increment
+    public abstract ArrayList<Double> getDistances(); //each 100 ms increment
     public abstract double getDist();
     public abstract double getMaxVel();
     public abstract double getAccel();
