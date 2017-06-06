@@ -19,7 +19,7 @@ public class TrapProfile extends Profile {
         max_velocity = v_max;
         acceleration = accel;
         t0 = 0;
-        t1 = v_max / accel;
+        t1 = Math.abs(v_max / accel);
         t2 = Math.abs((dist - (v_max * t1)) / v_max + t1);
         t3 = t2 + t1;
     }
@@ -63,7 +63,7 @@ public class TrapProfile extends Profile {
     //per 100 msec
     public ArrayList<Double> getDistances(){
         ArrayList<Double> distArr = new ArrayList<>();
-        for(double i = 0.0; i < getFinalTime() + 0.1; i += 0.1){
+        for(double i = 0.0; i < getFinalTime(); i += 0.1){
             distArr.add(new Double(getDistAtTime(i)));
         }
         return distArr;

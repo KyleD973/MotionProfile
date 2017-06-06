@@ -14,7 +14,7 @@ public class main {
         for(double i = 0.0; i <= profileObj.getFinalTime(); i += 1.0){
             totalDist += 0.5 * (profileObj.getVelocityAtTime(i) - profileObj.getVelocityAtTime(i - 0.1)) * (0.1);
         }
-        return totalDist + 0.5 >= profileObj.getDist() || totalDist - 0.5 <= profileObj.getDist(); 
+        return Math.abs(totalDist - profileObj.getDist()) < 0.05; 
     }
     
     public static boolean exceedsMaxVelocity(Profile profileObj){

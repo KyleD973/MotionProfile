@@ -13,13 +13,23 @@ import java.util.ArrayList;
 public abstract class Profile {
     
     public static Profile getVelProfile(double max_velocity, double acceleration, double distance){
-        if((Math.pow(max_velocity, 2.0) / acceleration) < distance){
+        if((Math.pow(max_velocity, 2.0) / acceleration) < Math.abs(distance)){
             System.out.println("trapezoidal");
-            return new TrapProfile(max_velocity, acceleration, distance);
+            if(distance < 0.0){
+                return new TrapProfile(-max_velocity, acceleration, distance);
+            }
+            else{
+                return new TrapProfile(max_velocity, acceleration, distance);
+            }
         }
         else {
             System.out.println("triangular");
-            return new TriProfile(max_velocity, acceleration, distance);
+            if(distance < 0.0){
+                return new TriProfile(-max_velocity, acceleration, distance);
+            }
+            else{
+                return new TriProfile(max_velocity, acceleration, distance);
+            }
 	}
     }
    
