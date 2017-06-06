@@ -56,6 +56,6 @@ public class main {
             System.out.println(profile1.getDistAtTime(profile1.getFinalTime()));//profile1.getFinalTime()));
             System.out.println(profile1.getDistances());
             System.out.println(profile1.getVelocityAtTime(profile1.getFinalTime()));
-            //System.out.println(checkExtremes(profile1) + " " + exceedsAccel(profile1) + exceedsAccel(profile1) + checkDist(profile1));
+            System.out.println(checkExtremes(profile1) + " " + exceedsAccel(profile1) + exceedsAccel(profile1) + checkDist(profile1));
         }
 }
