@@ -11,10 +11,19 @@
 public class main {
     public static boolean checkDist(Profile profileObj){
         double totalDist = 0;
-        for(double i = 0.0; i <= profileObj.getFinalTime(); i += 1.0){
-            totalDist += 0.5 * (profileObj.getVelocityAtTime(i) - profileObj.getVelocityAtTime(i - 0.1)) * (0.1);
+        if(profileObj instanceof TrapProfile){
+            for(double i = 0.0; i < profileObj.getFinalTime() - 0.1; i += 0.1){
+                totalDist += 0.5 * (profileObj.getVelocityAtTime(i) + profileObj.getVelocityAtTime(i + 0.1)) * (0.1);
+                System.out.println(totalDist);
+            }
         }
-        return Math.abs(totalDist - profileObj.getDist()) < 0.05; 
+        else if(profileObj instanceof TriProfile){
+            for(double i = 0.0; i < profileObj.getFinalTime() - 0.1; i += 0.1){
+                totalDist += -(profileObj.getVelocityAtTime(i) + profileObj.getVelocityAtTime(i + 0.1)) * (0.1);
+                System.out.println(totalDist);
+            }
+        }
+        return Math.abs(totalDist - profileObj.getDist()) < 1.0; 
     }
     
     public static boolean exceedsMaxVelocity(Profile profileObj){
@@ -48,14 +57,14 @@ public class main {
     
     public static void main (String[] args) throws java.lang.Exception
 	{
-            double v_max = 90.0;
-            double dist = 50.0;
+            double v_max = 50.0;
+            double dist = -10.0;
             double accel = 100.0;
             Profile profile1 = Profile.getVelProfile(v_max, accel, dist);
             
             System.out.println(profile1.getDistAtTime(profile1.getFinalTime()));//profile1.getFinalTime()));
             System.out.println(profile1.getDistances());
             System.out.println(profile1.getVelocityAtTime(profile1.getFinalTime()));
-            //System.out.println(checkExtremes(profile1) + " " + exceedsAccel(profile1) + exceedsAccel(profile1) + checkDist(profile1));
+            System.out.println(checkExtremes(profile1) + " " + exceedsAccel(profile1) + exceedsAccel(profile1) + checkDist(profile1));
         }
 }
