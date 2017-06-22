@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author kyledematias
@@ -12,23 +6,23 @@ import java.util.ArrayList;
         
 public abstract class Profile {
     
-    public static Profile getVelProfile(double max_velocity, double acceleration, double distance){
+    public static Profile getVelProfile(double max_velocity, double acceleration, double distance, double start_vel, double end_vel){
         if((Math.pow(max_velocity, 2.0) / acceleration) < Math.abs(distance)){
             System.out.println("trapezoidal");
             if(distance < 0.0){
-                return new TrapProfile(-max_velocity, acceleration, distance);
+                return new TrapProfile(-max_velocity, acceleration, distance, -start_vel, -end_vel);
             }
             else{
-                return new TrapProfile(max_velocity, acceleration, distance);
+                return new TrapProfile(max_velocity, acceleration, distance, start_vel, end_vel);
             }
         }
         else {
             System.out.println("triangular");
             if(distance < 0.0){
-                return new TriProfile(-max_velocity, acceleration, distance);
+                return new TriProfile(-max_velocity, acceleration, distance, -start_vel, -end_vel);
             }
             else{
-                return new TriProfile(max_velocity, acceleration, distance);
+                return new TriProfile(max_velocity, acceleration, distance, start_vel, end_vel);
             }
 	}
     }
@@ -40,4 +34,6 @@ public abstract class Profile {
     public abstract double getDist();
     public abstract double getMaxVel();
     public abstract double getAccel();
+    public abstract double getStartVel();
+    public abstract double getEndVel();
 }

@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author kyledematias
@@ -11,29 +5,38 @@
 import java.util.ArrayList;
 
 public class TriProfile extends Profile {
-    private double max_velocity, acceleration, distance, t0, t_half, t1;
+    private double max_velocity, acceleration, distance, t0, t_half, t1, start_velocity, end_velocity, cap_velocity;
     
-    public TriProfile(double v_max, double accel, double dist){
+    public TriProfile(double v_max, double accel, double dist, double start_vel, double end_vel){
         max_velocity = v_max;
         acceleration = accel;
         distance = dist;
+        start_velocity = start_vel;
+        end_velocity = end_vel;
+        cap_velocity = Math.sqrt(acceleration * distance + (Math.pow(start_velocity, 2.0) + Math.pow(end_velocity, 2.0)) / 2.0);
         t0 = 0.0;
-        t_half = Math.sqrt(0.5 * Math.abs(distance) / acceleration);
-        t1 = 2.0 * t_half;
+        t_half = Math.abs(cap_velocity - start_velocity) / acceleration;
+        t1 = Math.abs(end_velocity - cap_velocity) / acceleration + t_half;
+                System.out.println(t_half);
+
     }
     
     public double getVelocityAtTime(double time){
         double v_exp;
         if(time == t_half)
-            v_exp = acceleration * t_half;
+            v_exp = acceleration * t_half + start_velocity;
         else if(time < t_half){
-            v_exp = acceleration * time;
+            v_exp = acceleration * time + start_velocity;
         }
         else if(time > t_half){
-            v_exp  = acceleration * (t1 - time);
+            v_exp  = cap_velocity - acceleration * (time - t_half);
         }
         else
             v_exp = 0;
+        if(acceleration > 0.0 && max_velocity == start_velocity && max_velocity == end_velocity){
+            System.out.println("Over Constrained Profile");
+            v_exp = max_velocity;
+        }
         return v_exp;
     }
     
@@ -44,7 +47,7 @@ public class TriProfile extends Profile {
         else if(time < t_half){
             dist = (0.5 * getVelocityAtTime(time) * time); 
         }
-        else if(time > t_half && time <= t1){
+        else if(time > t_half && time < t1){
             dist = (getVelocityAtTime(t_half) * t_half) +
                     (getVelocityAtTime(t_half) + getVelocityAtTime(time) / 2.0) * (time - t_half);
 //(Math.pow((getVelocityAtTime(time)), 2.0) - Math.pow((getVelocityAtTime(t_half)), 2.0)) / (2.0 * -acceleration);
@@ -83,5 +86,13 @@ public class TriProfile extends Profile {
     
     public double getAccel(){
         return acceleration;
+    }
+    
+    public double getStartVel(){
+        return start_velocity;
+    }
+    
+    public double getEndVel(){
+        return end_velocity;
     }
 }
