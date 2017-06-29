@@ -42,4 +42,4 @@ Just make sure that you are transposing the right variable names and such so tha
 
 ## Acknowledgements
 This was heavily inspired from our 973 College Student Mentor Andrew Nelson.
-Reference: [Trap Profile] (https://github.com/yabberyabber/jupyter_notebooks/blob/master/trap%20profile%20with%20optional%20rampup%20and%20follow-through.ipynb)
+Reference: [Trap Profile](https://github.com/yabberyabber/jupyter_notebooks/blob/master/trap%20profile%20with%20optional%20rampup%20and%20follow-through.ipynb)
