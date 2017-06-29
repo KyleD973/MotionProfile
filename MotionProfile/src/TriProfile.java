@@ -13,12 +13,11 @@ public class TriProfile extends Profile {
         distance = dist;
         start_velocity = start_vel;
         end_velocity = end_vel;
-        cap_velocity = Math.sqrt(acceleration * distance + (Math.pow(start_velocity, 2.0) + Math.pow(end_velocity, 2.0)) / 2.0);
+        cap_velocity = Math.sqrt(Math.abs(acceleration * distance) + (Math.pow(start_velocity, 2.0) + Math.pow(end_velocity, 2.0)) / 2.0);
         t0 = 0.0;
         t_half = Math.abs(cap_velocity - start_velocity) / acceleration;
-        t1 = Math.abs(end_velocity - cap_velocity) / acceleration + t_half;
-                System.out.println(t_half);
-
+        t1 = (Math.abs(end_velocity) - Math.abs(cap_velocity)) / acceleration + t_half;
+        assert (Math.abs(cap_velocity) + Math.abs(end_velocity)) / 2.0 * t1 < Math.abs(dist) + 1.0 : "Overconstrained profile";
     }
     
     public double getVelocityAtTime(double time){
@@ -50,7 +49,6 @@ public class TriProfile extends Profile {
         else if(time > t_half && time < t1){
             dist = (getVelocityAtTime(t_half) * t_half) +
                     (getVelocityAtTime(t_half) + getVelocityAtTime(time) / 2.0) * (time - t_half);
-//(Math.pow((getVelocityAtTime(time)), 2.0) - Math.pow((getVelocityAtTime(t_half)), 2.0)) / (2.0 * -acceleration);
         }
         else{
             dist = distance;
