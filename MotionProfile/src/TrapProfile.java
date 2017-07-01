@@ -15,12 +15,12 @@ public class TrapProfile extends Profile {
         start_velocity = start_vel;
         end_velocity = end_vel;
         t0 = 0;
-        t1 = Math.abs(max_velocity - start_velocity) / accel;
-        d1 = (Math.abs(max_velocity + start_velocity) / 2.0) * t1;
+        t1 = (Math.abs(max_velocity) - Math.abs(start_velocity)) / accel;
+        d1 = ((Math.abs(max_velocity) + Math.abs(start_velocity)) / 2.0) * t1;
         d3 = (Math.pow(max_velocity, 2.0) - Math.pow(end_velocity, 2.0)) / (2.0 * acceleration);
-        d2 = distance - d1 - d3;
+        d2 = Math.abs(distance) - d1 - d3;
         t2 = Math.abs(d2 / max_velocity) + t1;
-        t3 = (end_velocity - max_velocity) / -acceleration + t2;
+        t3 = (Math.abs(end_velocity) - Math.abs(max_velocity)) / -acceleration + t2;
     }
 
     public double getFinalTime(){
@@ -30,20 +30,27 @@ public class TrapProfile extends Profile {
     public double getVelocityAtTime(double time){
         double v_exp = 0;
         if(time >= t1 && time <= t2){
-            v_exp = max_velocity;
+            v_exp = Math.abs(max_velocity);
         }
         else if(time < t1 && time >= t0){
-            v_exp = start_velocity + acceleration * time;
+            v_exp = Math.abs(start_velocity) + acceleration * time;
         }
         else if(time > t2 && time <= t3){
-            v_exp  = max_velocity - acceleration * (time - t2);
+            v_exp  = Math.abs(max_velocity) - acceleration * (time - t2);
         }
         if(acceleration > 0.0 && max_velocity == start_velocity && max_velocity == end_velocity){
             System.out.println("Over Constrained Profile");
             v_exp = max_velocity;
         }
-        return v_exp;
-    }
+        if(distance >= 0.0){
+            return v_exp;
+        }
+        else if(distance < 0.0){
+            return -v_exp;
+        }
+        else{
+            return 0.0;
+        }    }
     
     public double getDistAtTime(double time){
         double dist = 0;
@@ -61,7 +68,15 @@ public class TrapProfile extends Profile {
         else{
             dist = distance;
         }
-        return dist;
+        if(distance >= 0.0){
+            return dist;
+        }
+        else if(distance < 0.0){
+            return -dist;
+        }
+        else{
+            return 0.0;
+        }
     }
     
     //per 100 msec
