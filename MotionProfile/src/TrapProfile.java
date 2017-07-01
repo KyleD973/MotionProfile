@@ -38,10 +38,6 @@ public class TrapProfile extends Profile {
         else if(time > t2 && time <= t3){
             v_exp  = Math.abs(max_velocity) - acceleration * (time - t2);
         }
-        if(acceleration > 0.0 && max_velocity == start_velocity && max_velocity == end_velocity){
-            System.out.println("Over Constrained Profile");
-            v_exp = max_velocity;
-        }
         if(distance >= 0.0){
             return v_exp;
         }
@@ -50,7 +46,8 @@ public class TrapProfile extends Profile {
         }
         else{
             return 0.0;
-        }    }
+        }    
+    }
     
     public double getDistAtTime(double time){
         double dist = 0;

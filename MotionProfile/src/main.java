@@ -18,12 +18,7 @@ public class main {
                 System.out.println(totalDist);
             }
         }
-        if(profileObj.getDist() >= 0.0){
-            assert Math.abs((Math.abs(totalDist) - Math.abs(profileObj.getDist()))) >= 1.0: "Distance error"; 
-        }
-        else if(profileObj.getDist() < 0.0){
-            assert Math.abs((Math.abs(totalDist) - Math.abs(profileObj.getDist()))) <= 1.0: "Distance error"; 
-        }
+        assert Math.abs((Math.abs(totalDist) - Math.abs(profileObj.getDist()))) <= 1.0: "Distance error"; 
     }
     
     public static void exceedsMaxVelocity(Profile profileObj){
@@ -59,7 +54,7 @@ public class main {
     
     public static void main (String[] args) throws java.lang.Exception
 	{
-            Profile profile1 = Profile.getVelProfile(40, 10, -200, 10, 20);
+            Profile profile1 = Profile.getVelProfile(30, 5, 60, 10, 20);
             checkDist(profile1);
             checkExtremes(profile1);
             exceedsMaxVelocity(profile1);
