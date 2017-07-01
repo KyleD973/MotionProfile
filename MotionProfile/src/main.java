@@ -6,17 +6,9 @@ public class main {
     public static void checkDist(Profile profileObj){
         double totalDist = 0;
         double r = 0.01;
-        if(profileObj instanceof TrapProfile){
-            for(double i = 0.0; i < profileObj.getFinalTime() - r; i += r){
-                totalDist += 0.5 * (profileObj.getVelocityAtTime(i) + profileObj.getVelocityAtTime(i + r)) * (r);
-                //System.out.println(totalDist);
-            }
-        }
-        else if(profileObj instanceof TriProfile){
-            for(double i = 0.0; i < profileObj.getFinalTime() - r; i += r){
-                totalDist += 0.5 * (profileObj.getVelocityAtTime(i) + profileObj.getVelocityAtTime(i + r)) * (r);
-                //System.out.println(totalDist);
-            }
+        for(double i = 0.0; i < profileObj.getFinalTime() - r; i += r){
+            totalDist += 0.5 * (profileObj.getVelocityAtTime(i) + profileObj.getVelocityAtTime(i + r)) * (r);
+            //System.out.println(totalDist);
         }
         assert Math.abs((Math.abs(totalDist) - Math.abs(profileObj.getDist()))) <= 1.0: "Distance error"; 
     }
