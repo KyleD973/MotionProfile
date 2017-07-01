@@ -9,13 +9,13 @@ public class main {
         if(profileObj instanceof TrapProfile){
             for(double i = 0.0; i < profileObj.getFinalTime() - r; i += r){
                 totalDist += 0.5 * (profileObj.getVelocityAtTime(i) + profileObj.getVelocityAtTime(i + r)) * (r);
-                System.out.println(totalDist);
+                //System.out.println(totalDist);
             }
         }
         else if(profileObj instanceof TriProfile){
             for(double i = 0.0; i < profileObj.getFinalTime() - r; i += r){
                 totalDist += 0.5 * (profileObj.getVelocityAtTime(i) + profileObj.getVelocityAtTime(i + r)) * (r);
-                System.out.println(totalDist);
+                //System.out.println(totalDist);
             }
         }
         assert Math.abs((Math.abs(totalDist) - Math.abs(profileObj.getDist()))) <= 1.0: "Distance error"; 
@@ -54,17 +54,11 @@ public class main {
     
     public static void main (String[] args) throws java.lang.Exception
 	{
-            Profile profile1 = Profile.getVelProfile(30, 5, 60, 10, 20);
-            checkDist(profile1);
-            checkExtremes(profile1);
-            exceedsMaxVelocity(profile1);
-            exceedsAccel(profile1);
-           /* int i = 0;
-            for(double v_max = 5.0; v_max <= 10.0; v_max++){
-                for(double accel = 5.0; accel <= 10.0; accel++){
-                    for(double dist = 5.0; dist <= 10.0; dist++){
-                        for(double start_vel = 5.0; start_vel <= 10.0; start_vel++){
-                            for(double end_vel = 5.0; end_vel <= 10.0; end_vel++){
+            for(double v_max = -5.0; v_max <= 10.0; v_max++){
+                for(double accel = -5.0; accel <= 10.0; accel++){
+                    for(double dist = -5.0; dist <= 10.0; dist++){
+                        for(double start_vel = -5.0; start_vel <= 10.0; start_vel++){
+                            for(double end_vel = -5.0; end_vel <= 10.0; end_vel++){
                                 Profile profile1 = Profile.getVelProfile(v_max, accel, dist, start_vel, end_vel);
                                 checkDist(profile1);
                                 checkExtremes(profile1);
@@ -74,6 +68,6 @@ public class main {
                         }
                     }
                 }
-            } */     
+            }  
         }
 }

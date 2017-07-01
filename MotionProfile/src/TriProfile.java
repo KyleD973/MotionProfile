@@ -15,9 +15,9 @@ public class TriProfile extends Profile {
         end_velocity = end_vel;
         cap_velocity = Math.sqrt(Math.abs(acceleration * distance) + (Math.pow(start_velocity, 2.0) + Math.pow(end_velocity, 2.0)) / 2.0);
         t0 = 0.0;
-        t_half = Math.abs(cap_velocity - start_velocity) / acceleration;
+        t_half = (Math.abs(cap_velocity) - Math.abs(start_velocity)) / acceleration;
         t1 = Math.abs((Math.abs(end_velocity) - Math.abs(cap_velocity))) / acceleration + t_half;
-        System.out.println(t1);
+        System.out.println(t_half);
         assert (Math.abs(cap_velocity) + Math.abs(end_velocity)) / 2.0 * t1 > Math.abs(dist) + 1.0 : "Overconstrained profile";
     }
     
