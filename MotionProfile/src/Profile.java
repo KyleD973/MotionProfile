@@ -7,7 +7,8 @@ import java.util.ArrayList;
 public abstract class Profile {
     
     public static Profile getVelProfile(double max_velocity, double acceleration, double distance, double start_vel, double end_vel){
-        if((Math.pow(max_velocity, 2.0) / acceleration) < Math.abs(distance)){
+        assert acceleration == 0.0 && max_velocity == start_vel && start_vel == end_vel: "Velocity must stay constant (ie. accel = 0)";
+        if((Math.pow(max_velocity, 2.0) / acceleration) < Math.abs(distance) || acceleration == 0.0){
             System.out.println("trapezoidal");
             if(distance < 0.0){
                 return new TrapProfile(-max_velocity, acceleration, distance, -start_vel, -end_vel);

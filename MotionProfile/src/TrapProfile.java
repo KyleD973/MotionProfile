@@ -14,13 +14,24 @@ public class TrapProfile extends Profile {
         acceleration = accel;
         start_velocity = start_vel;
         end_velocity = end_vel;
-        t0 = 0;
-        t1 = (Math.abs(max_velocity) - Math.abs(start_velocity)) / accel;
-        d1 = ((Math.abs(max_velocity) + Math.abs(start_velocity)) / 2.0) * t1;
-        d3 = (Math.pow(max_velocity, 2.0) - Math.pow(end_velocity, 2.0)) / (2.0 * acceleration);
-        d2 = Math.abs(distance) - d1 - d3;
-        t2 = Math.abs(d2 / max_velocity) + t1;
-        t3 = (Math.abs(end_velocity) - Math.abs(max_velocity)) / -acceleration + t2;
+        if(start_vel == end_vel && max_velocity == start_vel){
+            t0 = 0.0;
+            t1 = 0.0;
+            t2 = distance / max_velocity;
+            t3 = t2;
+            d1 = distance;
+            d2 = distance;
+            d3 = distance;
+        }
+        else{
+            t0 = 0;
+            t1 = (Math.abs(max_velocity) - Math.abs(start_velocity)) / accel;
+            d1 = ((Math.abs(max_velocity) + Math.abs(start_velocity)) / 2.0) * t1;
+            d3 = (Math.pow(max_velocity, 2.0) - Math.pow(end_velocity, 2.0)) / (2.0 * acceleration);
+            d2 = Math.abs(distance) - d1 - d3;
+            t2 = Math.abs(d2 / max_velocity) + t1;
+            t3 = (Math.abs(end_velocity) - Math.abs(max_velocity)) / -acceleration + t2;
+        }
     }
 
     public double getFinalTime(){
